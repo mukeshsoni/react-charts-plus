@@ -76,16 +76,32 @@ let DataSet = React.createClass({
 			}
 
 			let d = arc(e);
+			var polyline = <span/>;
+			var textComponent = <span/>;
 
-			if(showLabel) {
-				let labelPos = outerArc.centroid(e);
-				labelPos[0] = radius * (midAngle(e) < Math.PI ? 1 : -1);
+			let labelPos = outerArc.centroid(e);
+			labelPos[0] = radius * (midAngle(e) < Math.PI ? 1 : -1);
 
-				let textAnchor = midAngle(e) < Math.PI ? "start" : "end";
+			let textAnchor = midAngle(e) < Math.PI ? "start" : "end";
 
-				let linePos = outerArc.centroid(e);
-				linePos[0] = radius * 0.95 * (midAngle(e) < Math.PI ? 1 : -1);
-			}
+			let linePos = outerArc.centroid(e);
+			linePos[0] = radius * 0.95 * (midAngle(e) < Math.PI ? 1 : -1);
+			polyline = (
+					<polyline
+						opacity={showLabel ? opacity : 0}
+						strokeWidth={strokeWidth}
+						stroke={stroke}
+						fill={fill}
+						points={[arc.centroid(e), outerArc.centroid(e), linePos]}
+					/>
+				);
+			textComponent = (
+					<text
+						dy=".35em"
+						x={labelPos[0]}
+						y={labelPos[1]}
+						textAnchor={textAnchor}>{x(e.data)}</text>
+				);
 
 			return (
 					<g key={`${x(e.data)}.${y(e.data)}.${index}`} className="arc">
@@ -96,27 +112,14 @@ let DataSet = React.createClass({
 							onMouseEnter={onMouseEnter}
 							onMouseLeave={onMouseLeave}
 						/>
-						{this.props.showLabel ?
-									<polyline
-								opacity={opacity}
-								strokeWidth={strokeWidth}
-								stroke={stroke}
-								fill={fill}
-								points={[arc.centroid(e), outerArc.centroid(e), linePos]}
-									/> : ''}
-						{this.props.showLabel ?
-									<text
-								dy=".35em"
-								x={labelPos[0]}
-								y={labelPos[1]}
-								textAnchor={textAnchor}>{x(e.data)}</text>
-							: ''}
+						{polyline}
+						{textComponent}
 					</g>
 			);
 		});
 
 		return (
-				<g>
+			<g>
 				{wedges}
 			</g>
 		);
