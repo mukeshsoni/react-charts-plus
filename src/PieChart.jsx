@@ -16,14 +16,16 @@ let Wedge = React.createClass({
 	},
 
 	render() {
-		let {fill, d, data, onMouseEnter, onMouseLeave} = this.props;
+		let {fill, d, data, onMouseEnter, onMouseLeave, stroke, strokeWidth} = this.props;
 
 		return (
 				<path
-			fill={fill}
-			d={d}
-			onMouseMove={ evt => { onMouseEnter(evt, data); } }
-			onMouseLeave={  evt => { onMouseLeave(evt); } }
+					fill={fill}
+					stroke={stroke}
+					strokeWidth={strokeWidth}
+					d={d}
+					onMouseMove={ evt => { onMouseEnter(evt, data); } }
+					onMouseLeave={  evt => { onMouseLeave(evt); } }
 				/>
 		);
 	}
@@ -37,8 +39,10 @@ let DataSet = React.createClass({
 		outerArc: React.PropTypes.func.isRequired,
 		colorScale: React.PropTypes.func.isRequired,
 		radius: React.PropTypes.number.isRequired,
-		strokeWidth: React.PropTypes.number,
 		stroke: React.PropTypes.string,
+		strokeWidth: React.PropTypes.number,
+		wedgeStroke: React.PropTypes.string,
+		wedgeStrokeWidth: React.PropTypes.number,
 		fill: React.PropTypes.string,
 		opacity: React.PropTypes.number,
 		x: React.PropTypes.func.isRequired
@@ -48,6 +52,8 @@ let DataSet = React.createClass({
 		return {
 			strokeWidth: 2,
 			stroke: '#000',
+			wedgeStrokeWidth: 2,
+			wedgeStroke: '#000',
 			fill: 'none',
 			opacity: 0.3,
 			showLabel: true
@@ -62,6 +68,8 @@ let DataSet = React.createClass({
 			 radius,
 			 strokeWidth,
 			 stroke,
+			 wedgeStroke,
+			 wedgeStrokeWidth,
 			 showLabel,
 			 fill,
 			 opacity,
@@ -106,6 +114,8 @@ let DataSet = React.createClass({
 			return (
 					<g key={`${x(e.data)}.${y(e.data)}.${index}`} className="arc">
 						<Wedge
+							stroke={wedgeStroke}
+							strokeWidth={wedgeStrokeWidth}
 							data={e.data}
 							fill={colorScale(x(e.data))}
 							d={d}
@@ -222,8 +232,8 @@ let PieChart = React.createClass({
 				<DataSet
 			width={innerWidth}
 			height={innerHeight}
-			stroke={stroke}
-			strokeWidth={strokeWidth}
+			wedgeStroke={stroke}
+			wedgeStrokeWidth={strokeWidth}
 			showLabel={showLabel}
 			colorScale={colorScale}
 			pie={pieData}
