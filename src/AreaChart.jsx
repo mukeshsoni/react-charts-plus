@@ -29,6 +29,7 @@ let DataSet = React.createClass({
 			 line,
 			 colorScale,
 			 stroke,
+			 lineStrokeWidth,
 			 values,
 			 label,
 			 onMouseEnter,
@@ -40,7 +41,7 @@ let DataSet = React.createClass({
 				key={`${label(stack)}.${index}`}
 				className="area"
 				stroke="none"
-				fill={colorScale(label(stack))}
+				fill={colorScale(label(stack), index)}
 				d={area(values(stack))}
 				onMouseEnter={onMouseEnter}
 				onMouseLeave={onMouseLeave}
@@ -49,12 +50,13 @@ let DataSet = React.createClass({
 			);
 		});
 
-		let lines = data.map(stack => {
+		let lines = data.map((stack, index) => {
 			return (
 					<Path
 				className="line"
 				d={line(values(stack))}
-				stroke={stroke(label(stack))}
+				stroke={stroke(label(stack), index)}
+				strokeWidth={lineStrokeWidth}
 					/>
 			);
 		});
@@ -85,7 +87,8 @@ let AreaChart = React.createClass({
 	getDefaultProps() {
 		return {
 			interpolate: 'linear',
-			stroke: d3.scale.category20()
+			stroke: d3.scale.category20(),
+			lineStrokeWidth: 2
 		};
 	},
 
@@ -130,6 +133,7 @@ let AreaChart = React.createClass({
 			 colorScale,
 			 interpolate,
 			 stroke,
+			 lineStrokeWidth,
 			 offset,
 			 values,
 			 label,
@@ -177,6 +181,7 @@ let AreaChart = React.createClass({
 			area={area}
 			colorScale={colorScale}
 			stroke={stroke}
+			lineStrokeWidth={lineStrokeWidth}
 			label={label}
 			values={values}
 			onMouseEnter={this.onMouseEnter}
@@ -203,10 +208,13 @@ let AreaChart = React.createClass({
 				</Chart>
 
 				<Tooltip
-			hidden={this.state.tooltip.hidden}
-			top={this.state.tooltip.top}
-			left={this.state.tooltip.left}
-			html={this.state.tooltip.html}/>
+					ref='tooltip'
+					hidden={this.state.tooltip.hidden}
+					top={this.state.tooltip.top}
+					position={this.state.tooltip.position}
+					left={this.state.tooltip.left}
+					right={this.state.tooltip.right}
+					html={this.state.tooltip.html} />
 				</div>
 		);
 	}

@@ -31,6 +31,7 @@ let Wedge = React.createClass({
 
 let DataSet = React.createClass({
 	propTypes: {
+		showLabel: React.PropTypes.bool,
 		pie: React.PropTypes.array.isRequired,
 		arc: React.PropTypes.func.isRequired,
 		outerArc: React.PropTypes.func.isRequired,
@@ -48,7 +49,8 @@ let DataSet = React.createClass({
 			strokeWidth: 2,
 			stroke: '#000',
 			fill: 'none',
-			opacity: 0.3
+			opacity: 0.3,
+			showLabel: true
 		};
 	},
 
@@ -60,6 +62,7 @@ let DataSet = React.createClass({
 			 radius,
 			 strokeWidth,
 			 stroke,
+			 showLabel,
 			 fill,
 			 opacity,
 			 x,
@@ -74,37 +77,40 @@ let DataSet = React.createClass({
 
 			let d = arc(e);
 
-			let labelPos = outerArc.centroid(e);
-			labelPos[0] = radius * (midAngle(e) < Math.PI ? 1 : -1);
+			if(showLabel) {
+				let labelPos = outerArc.centroid(e);
+				labelPos[0] = radius * (midAngle(e) < Math.PI ? 1 : -1);
 
-			let textAnchor = midAngle(e) < Math.PI ? "start" : "end";
+				let textAnchor = midAngle(e) < Math.PI ? "start" : "end";
 
-			let linePos = outerArc.centroid(e);
-			linePos[0] = radius * 0.95 * (midAngle(e) < Math.PI ? 1 : -1);
+				let linePos = outerArc.centroid(e);
+				linePos[0] = radius * 0.95 * (midAngle(e) < Math.PI ? 1 : -1);
+			}
 
 			return (
 					<g key={`${x(e.data)}.${y(e.data)}.${index}`} className="arc">
-					<Wedge
-				data={e.data}
-				fill={colorScale(x(e.data))}
-				d={d}
-				onMouseEnter={onMouseEnter}
-				onMouseLeave={onMouseLeave}
-					/>
-
-					<polyline
-				opacity={opacity}
-				strokeWidth={strokeWidth}
-				stroke={stroke}
-				fill={fill}
-				points={[arc.centroid(e), outerArc.centroid(e), linePos]}
-					/>
-
-					<text
-				dy=".35em"
-				x={labelPos[0]}
-				y={labelPos[1]}
-				textAnchor={textAnchor}>{x(e.data)}</text>
+						<Wedge
+							data={e.data}
+							fill={colorScale(x(e.data))}
+							d={d}
+							onMouseEnter={onMouseEnter}
+							onMouseLeave={onMouseLeave}
+						/>
+						{this.props.showLabel ?
+									<polyline
+								opacity={opacity}
+								strokeWidth={strokeWidth}
+								stroke={stroke}
+								fill={fill}
+								points={[arc.centroid(e), outerArc.centroid(e), linePos]}
+									/> : ''}
+						{this.props.showLabel ?
+									<text
+								dy=".35em"
+								x={labelPos[0]}
+								y={labelPos[1]}
+								textAnchor={textAnchor}>{x(e.data)}</text>
+							: ''}
 					</g>
 			);
 		});
@@ -139,7 +145,8 @@ let PieChart = React.createClass({
 			labelRadius: null,
 			padRadius: "auto",
 			cornerRadius: 0,
-			sort: undefined
+			sort: undefined,
+			showLabel: true
 		};
 	},
 
@@ -152,6 +159,7 @@ let PieChart = React.createClass({
 			 width,
 			 height,
 			 margin,
+			 showLabel,
 			 colorScale,
 			 innerRadius,
 			 outerRadius,
@@ -175,11 +183,11 @@ let PieChart = React.createClass({
 		}
 
 		let radius = Math.min(innerWidth, innerHeight) / 2;
-		if (!innerRadius) {
+		if (!innerRadius && innerRadius !== 0) {
 			innerRadius = radius * 0.8;
 		}
 
-		if (!outerRadius) {
+		if (!outerRadius && outerRadius !== 0) {
 			outerRadius = radius * 0.4;
 		}
 
@@ -207,6 +215,7 @@ let PieChart = React.createClass({
 				<DataSet
 			width={innerWidth}
 			height={innerHeight}
+			showLabel={showLabel}
 			colorScale={colorScale}
 			pie={pieData}
 			arc={arc}

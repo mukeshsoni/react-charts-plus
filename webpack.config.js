@@ -7,7 +7,8 @@ module.exports = {
 		library: "ReactD3",
 		libraryTarget: "umd",
 
-		path: path.resolve(__dirname, "dist"),
+		// path: path.resolve(__dirname, "dist"),
+		path: '/Users/mukesh/Documents/pp-main/frontend/harmony/src/pp/shared/vendor',
 		filename: "react-d3-components.js"
 	},
 	module: {
@@ -21,8 +22,8 @@ module.exports = {
 		extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx']
 	},
 	externals: {
-		d3: true,
-		react: 'React'
+		d3: 'pp/shared/vendor/d3',
+		react: 'vendor/react'
 	},
 	devtool: 'eval'
 };

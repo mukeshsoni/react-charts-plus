@@ -17,14 +17,19 @@ let Tooltip = React.createClass({
 	},
 
 	render() {
-		let {top, left, hidden, html} = this.props;
+		let {top, left, hidden, html, position, right} = this.props;
 
 		let style = {
 			display: hidden ? "none" : "block",
 			position: "fixed",
-			top: top,
-			left: left
+			top: top
 		};
+
+		if(position === 'right') {
+			style.right = right;
+		} else {
+			style.left = left;
+		}
 
 		return (
 				<div className="tooltip" style={style}>{html}</div>

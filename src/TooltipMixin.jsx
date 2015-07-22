@@ -47,13 +47,23 @@ let TooltipMixin = {
 						e.clientY - rect.top - svg.clientTop - margin.top];
 		}
 
+		var left = e.clientX + this.props.tooltipOffset.left;
+
+		var newTooltip = {
+			top: e.clientY + this.props.tooltipOffset.top,
+			position: 'left',
+			left: left,
+			hidden: false,
+			html: this._tooltipHtml(data, position)
+		};
+
+		if(svg.clientWidth - e.clientX < 170) {
+			newTooltip.position = 'right';
+			newTooltip.right = svg.clientWidth - e.clientX + this.props.tooltipOffset.left + 10;
+		}
+
 		this.setState({
-			tooltip: {
-				top: e.clientY + this.props.tooltipOffset.top,
-				left: e.clientX + this.props.tooltipOffset.left,
-				hidden: false,
-				html: this._tooltipHtml(data, position)
-			}
+			tooltip: newTooltip
 		});
 	},
 
