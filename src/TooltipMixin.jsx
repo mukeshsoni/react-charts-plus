@@ -57,9 +57,9 @@ let TooltipMixin = {
 			html: this._tooltipHtml(data, position)
 		};
 
-		if(svg.clientWidth - e.clientX < 170) {
+		if(window.innerWidth - e.clientX < 170) {
 			newTooltip.position = 'right';
-			newTooltip.right = svg.clientWidth - e.clientX + this.props.tooltipOffset.left + 10;
+			newTooltip.right = window.innerWidth - e.clientX + this.props.tooltipOffset.left;
 		}
 
 		this.setState({

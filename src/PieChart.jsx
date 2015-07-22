@@ -230,29 +230,29 @@ let PieChart = React.createClass({
 				<Chart height={height} width={width} margin={margin}>
 				<g transform={translation}>
 				<DataSet
-			width={innerWidth}
-			height={innerHeight}
-			wedgeStroke={stroke}
-			wedgeStrokeWidth={strokeWidth}
-			showLabel={showLabel}
-			colorScale={colorScale}
-			pie={pieData}
-			arc={arc}
-			outerArc={outerArc}
-			radius={radius}
-			x={x}
-			y={y}
-			onMouseEnter={this.onMouseEnter}
-			onMouseLeave={this.onMouseLeave}
+					width={innerWidth}
+					height={innerHeight}
+					wedgeStroke={stroke}
+					wedgeStrokeWidth={strokeWidth}
+					showLabel={showLabel}
+					colorScale={colorScale}
+					pie={pieData}
+					arc={arc}
+					outerArc={outerArc}
+					radius={radius}
+					x={x}
+					y={y}
+					onMouseEnter={this.onMouseEnter}
+					onMouseLeave={this.onMouseLeave}
 				/>
 				</g>
 				</Chart>
 
 				<Tooltip
-			hidden={this.state.tooltip.hidden}
-			top={this.state.tooltip.top}
-			left={this.state.tooltip.left}
-			html={this.state.tooltip.html}/>
+					hidden={this.state.tooltip.hidden}
+					top={this.state.tooltip.top}
+					left={this.state.tooltip.left}
+					html={this.state.tooltip.html}/>
 				</div>
 		);
 	}
