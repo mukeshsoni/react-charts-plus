@@ -149,7 +149,9 @@ let PieChart = React.createClass({
 			padRadius: "auto",
 			cornerRadius: 0,
 			sort: undefined,
-			showLabel: true
+			showLabel: true,
+			strokeWidth: 2,
+			stroke: '#000'
 		};
 	},
 
@@ -162,6 +164,8 @@ let PieChart = React.createClass({
 			 width,
 			 height,
 			 margin,
+			 stroke,
+			 strokeWidth,
 			 showLabel,
 			 colorScale,
 			 innerRadius,
@@ -218,6 +222,8 @@ let PieChart = React.createClass({
 				<DataSet
 			width={innerWidth}
 			height={innerHeight}
+			stroke={stroke}
+			strokeWidth={strokeWidth}
 			showLabel={showLabel}
 			colorScale={colorScale}
 			pie={pieData}
