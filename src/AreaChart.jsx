@@ -214,6 +214,7 @@ let AreaChart = React.createClass({
 					position={this.state.tooltip.position}
 					left={this.state.tooltip.left}
 					right={this.state.tooltip.right}
+					bottom={this.state.tooltip.bottom}
 					html={this.state.tooltip.html} />
 				</div>
 		);

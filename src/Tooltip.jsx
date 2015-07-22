@@ -12,7 +12,7 @@ let Tooltip = React.createClass({
 		return {
 			top: 150,
 			left: 100,
-			html: ""
+			html: ''
 		};
 	},
 
@@ -20,19 +20,21 @@ let Tooltip = React.createClass({
 		let {top, left, hidden, html, position, right} = this.props;
 
 		let style = {
-			display: hidden ? "none" : "block",
-			position: "fixed",
-			top: top
+			display: hidden ? 'none' : 'block',
+			position: 'fixed',
+			top: 'inherit'
 		};
 
-		if(position === 'right') {
-			style.right = right;
+		if(position) {
+			style[position[0]] = this.props[position[0]];
+			style[position[1]] = this.props[position[1]];
 		} else {
+			style.top = top;
 			style.left = left;
 		}
 
 		return (
-				<div className="tooltip" style={style}>{html}</div>
+				<div className='tooltip' style={style}>{html}</div>
 		);
 	}
 });

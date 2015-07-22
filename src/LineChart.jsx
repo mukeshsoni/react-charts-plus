@@ -229,12 +229,12 @@ let LineChart = React.createClass({
 			let translate = this._tooltipData ? `translate(${xScale(x(this._tooltipData.value))}, ${yScale(y(this._tooltipData.value))})` : "";
 			tooltipSymbol = this.state.tooltip.hidden ? null :
 				<path
-			className="dot"
-			d={symbol()}
-			transform={translate}
-			fill={symbolColor}
-			onMouseEnter={evt => { this.onMouseEnter(evt, data); }}
-			onMouseLeave={evt => { this.onMouseLeave(evt); }}
+					className="dot"
+					d={symbol()}
+					transform={translate}
+					fill={symbolColor}
+					onMouseEnter={evt => { this.onMouseEnter(evt, data); }}
+					onMouseLeave={evt => { this.onMouseLeave(evt); }}
 				/>;
 		}
 
@@ -243,36 +243,36 @@ let LineChart = React.createClass({
 				<Chart height={height} width={width} margin={margin}>
 
 				<DataSet
-			height={innerHeight}
-			width={innerWidth}
-			data={data}
-			line={line}
-			colorScale={colorScale}
-			values={values}
-			label={label}
-			onMouseEnter={this.onMouseEnter}
-			onMouseLeave={this.onMouseLeave}
-			{...stroke}
+					height={innerHeight}
+					width={innerWidth}
+					data={data}
+					line={line}
+					colorScale={colorScale}
+					values={values}
+					label={label}
+					onMouseEnter={this.onMouseEnter}
+					onMouseLeave={this.onMouseLeave}
+					{...stroke}
 				/>
 
 				<Axis
-			className={'x axis'}
-			orientation={'bottom'}
-			scale={xScale}
-			height={innerHeight}
-			width={innerWidth}
-			zero={yIntercept}
-			{...xAxis}
+					className={'x axis'}
+					orientation={'bottom'}
+					scale={xScale}
+					height={innerHeight}
+					width={innerWidth}
+					zero={yIntercept}
+					{...xAxis}
 				/>
 
 				<Axis
-			className={'y axis'}
-			orientation={'left'}
-			scale={yScale}
-			height={innerHeight}
-			width={innerWidth}
-			zero={xIntercept}
-			{...yAxis}
+					className={'y axis'}
+					orientation={'left'}
+					scale={yScale}
+					height={innerHeight}
+					width={innerWidth}
+					zero={xIntercept}
+					{...yAxis}
 				/>
 
 				{tooltipSymbol}
@@ -280,10 +280,10 @@ let LineChart = React.createClass({
 				</Chart>
 
 				<Tooltip
-			hidden={this.state.tooltip.hidden}
-			top={this.state.tooltip.top}
-			left={this.state.tooltip.left}
-			html={this.state.tooltip.html}
+					hidden={this.state.tooltip.hidden}
+					top={this.state.tooltip.top}
+					left={this.state.tooltip.left}
+					html={this.state.tooltip.html}
 				/>
 
 			</div>

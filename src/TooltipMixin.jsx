@@ -51,15 +51,20 @@ let TooltipMixin = {
 
 		var newTooltip = {
 			top: e.clientY + this.props.tooltipOffset.top,
-			position: 'left',
+			position: ['top', 'left'],
 			left: left,
 			hidden: false,
 			html: this._tooltipHtml(data, position)
 		};
 
 		if(window.innerWidth - e.clientX < 170) {
-			newTooltip.position = 'right';
+			newTooltip.position[1] = 'right';
 			newTooltip.right = window.innerWidth - e.clientX + this.props.tooltipOffset.left;
+		}
+
+		if(window.innerHeight - e.clientY < 150) {
+			newTooltip.position[0] = 'bottom';
+			newTooltip.bottom = window.innerHeight - e.clientY + this.props.tooltipOffset.top;
 		}
 
 		this.setState({
