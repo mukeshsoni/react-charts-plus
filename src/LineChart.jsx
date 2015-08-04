@@ -295,11 +295,14 @@ if (Math.abs(xValueCursor - xValueRight) < Math.abs(xValueCursor - xValueLeft)) 
 				</Chart>
 
 				<Tooltip
+					ref='tooltip'
 					hidden={this.state.tooltip.hidden}
 					top={this.state.tooltip.top}
+					position={this.state.tooltip.position}
 					left={this.state.tooltip.left}
-					html={this.state.tooltip.html}
-				/>
+					right={this.state.tooltip.right}
+					bottom={this.state.tooltip.bottom}
+					html={this.state.tooltip.html} />
 
 			</div>
 		);
