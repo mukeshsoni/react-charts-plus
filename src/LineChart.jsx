@@ -88,7 +88,8 @@ let LineChart = React.createClass({
 			interpolate: 'linear',
 			defined: () => true,
 			shape: 'circle',
-			shapeColor: null
+			shapeColor: null,
+			showTooltipDot: true
 		};
 	},
 
@@ -106,7 +107,19 @@ let LineChart = React.createClass({
 
 		let xBisector = d3.bisector(e => { return x(e); }).left;
 		let xIndex = xBisector(values(data[0]), xScale.invert(position[0]));
+xIndex = (xIndex == values(data[0]).length) ? xIndex - 1: xIndex;
 
+let xIndexRight = xIndex == values(data[0]).length ? xIndex - 1: xIndex;
+let xValueRight = x(values(data[0])[xIndexRight]);
+
+let xIndexLeft = xIndex == 0 ? xIndex : xIndex - 1;
+let xValueLeft = x(values(data[0])[xIndexLeft]);
+
+if (Math.abs(xValueCursor - xValueRight) < Math.abs(xValueCursor - xValueLeft)) {
+	xIndex = xIndexRight;
+} else {
+	xIndex = xIndexLeft;
+}
 		let valuesAtX = data.map(stack => {
 			let idx = xBisector(values(stack), xValueCursor);
 
@@ -229,7 +242,7 @@ let LineChart = React.createClass({
 			let symbolColor = shapeColor ? shapeColor : colorScale(this._tooltipData.label);
 
 			let translate = this._tooltipData ? `translate(${xScale(x(this._tooltipData.value))}, ${yScale(y(this._tooltipData.value))})` : "";
-			tooltipSymbol = this.state.tooltip.hidden ? null :
+			tooltipSymbol = this.state.tooltip.hidden && !this.props.showTooltipDot ? null :
 				<path
 					className="dot"
 					d={symbol()}
