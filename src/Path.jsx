@@ -4,9 +4,18 @@ let d3 = require('d3');
 let Path = React.createClass({
 	propTypes: {
 		className: React.PropTypes.string,
-		stroke: React.PropTypes.string.isRequired,
-		strokeLinecap: React.PropTypes.string,
-		strokeWidth: React.PropTypes.string,
+		stroke: React.PropTypes.oneOfType([
+			React.PropTypes.string,
+			React.PropTypes.number
+	    ]),
+		strokeLinecap: React.PropTypes.oneOfType([
+			React.PropTypes.string,
+			React.PropTypes.number
+	    ]),
+		strokeWidth: React.PropTypes.oneOfType([
+			React.PropTypes.string,
+			React.PropTypes.number
+	    ]),
 		strokeDasharray: React.PropTypes.string,
 		fill: React.PropTypes.string,
 		d: React.PropTypes.string.isRequired,

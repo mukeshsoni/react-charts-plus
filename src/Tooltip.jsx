@@ -5,7 +5,10 @@ let Tooltip = React.createClass({
 	propTypes: {
 		top: React.PropTypes.number.isRequired,
 		left: React.PropTypes.number.isRequired,
-		html: React.PropTypes.string
+		html: React.PropTypes.oneOfType([
+			React.PropTypes.string,
+			React.PropTypes.element
+	    ]),
 	},
 
 	getDefaultProps() {
