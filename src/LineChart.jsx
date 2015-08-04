@@ -242,7 +242,7 @@ if (Math.abs(xValueCursor - xValueRight) < Math.abs(xValueCursor - xValueLeft)) 
 			let symbolColor = shapeColor ? shapeColor : colorScale(this._tooltipData.label);
 
 			let translate = this._tooltipData ? `translate(${xScale(x(this._tooltipData.value))}, ${yScale(y(this._tooltipData.value))})` : "";
-			tooltipSymbol = this.state.tooltip.hidden && !this.props.showTooltipDot ? null :
+			tooltipSymbol = this.state.tooltip.hidden || !this.props.showTooltipDot ? null :
 				<path
 					className="dot"
 					d={symbol()}
