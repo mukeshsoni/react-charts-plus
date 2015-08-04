@@ -105,6 +105,8 @@ let LineChart = React.createClass({
 		let yValueCursor = yScale.invert(position[1]);
 
 		let xBisector = d3.bisector(e => { return x(e); }).left;
+		let xIndex = xBisector(values(data[0]), xScale.invert(position[0]));
+
 		let valuesAtX = data.map(stack => {
 			let idx = xBisector(values(stack), xValueCursor);
 
@@ -144,7 +146,7 @@ let LineChart = React.createClass({
 
 		this._tooltipData = valuesAtX[index];
 
-		return this.props.tooltipHtml(valuesAtX[index].label, valuesAtX[index].value);
+		return this.props.tooltipHtml(valuesAtX[index].label, valuesAtX[index].value, xIndex);
 	},
 
 	/*
