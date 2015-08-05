@@ -25,6 +25,8 @@ let DataSet = React.createClass({
 
 	render() {
 		let {data,
+			 width,
+			 height,
 			 area,
 			 line,
 			 colorScale,
@@ -65,6 +67,15 @@ let DataSet = React.createClass({
 				<g>
 				{areas}
 				{lines}
+				<rect 
+					width={width} 
+					height={height} 
+					fill={'none'} 
+					stroke={'none'} 
+					style={{pointerEvents: 'all'}}
+					onMouseMove={ evt => { onMouseEnter(evt, data); } }
+					onMouseLeave={  evt => { onMouseLeave(evt); } }
+				/>
 			</g>
 		);
 	}
@@ -176,16 +187,18 @@ let AreaChart = React.createClass({
 					margin={margin}>
 
 				<DataSet
-			data={data}
-			line={line}
-			area={area}
-			colorScale={colorScale}
-			stroke={stroke}
-			lineStrokeWidth={lineStrokeWidth}
-			label={label}
-			values={values}
-			onMouseEnter={this.onMouseEnter}
-			onMouseLeave={this.onMouseLeave}
+					height={innerHeight}
+					width={innerWidth}
+					data={data}
+					line={line}
+					area={area}
+					colorScale={colorScale}
+					stroke={stroke}
+					lineStrokeWidth={lineStrokeWidth}
+					label={label}
+					values={values}
+					onMouseEnter={this.onMouseEnter}
+					onMouseLeave={this.onMouseLeave}
 				/>
 
 				<Axis

@@ -19,7 +19,7 @@ let Path = React.createClass({
 		strokeDasharray: React.PropTypes.string,
 		fill: React.PropTypes.string,
 		d: React.PropTypes.string.isRequired,
-		data: React.PropTypes.array.isRequired
+		data: React.PropTypes.array
 	},
 
 	getDefaultProps() {
