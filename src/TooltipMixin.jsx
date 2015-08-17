@@ -57,7 +57,7 @@ let TooltipMixin = {
 			html: this._tooltipHtml(data, position)
 		};
 
-		if(window.innerWidth - e.clientX < 170) {
+		if(window.innerWidth - e.clientX < 210) {
 			newTooltip.position[1] = 'right';
 			newTooltip.right = window.innerWidth - e.clientX + this.props.tooltipOffset.left;
 		}

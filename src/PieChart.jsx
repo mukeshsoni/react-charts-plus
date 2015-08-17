@@ -122,7 +122,7 @@ let DataSet = React.createClass({
 							onMouseEnter={onMouseEnter}
 							onMouseLeave={onMouseLeave}
 						/>
-						{polyline}
+						{showLabel ? polyline : ''}
 						{textComponent}
 					</g>
 			);
