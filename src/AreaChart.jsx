@@ -22,7 +22,11 @@ let DataSet = React.createClass({
 		colorScale: React.PropTypes.func.isRequired,
 		stroke: React.PropTypes.func.isRequired
 	},
-
+	getDefaultProps: function() {
+		return {
+			showTooltip: true
+		}
+	},
 	render() {
 		let {data,
 			 width,
@@ -33,6 +37,7 @@ let DataSet = React.createClass({
 			 stroke,
 			 lineStrokeWidth,
 			 values,
+			 showTooltip,
 			 label,
 			 onMouseEnter,
 			 onMouseLeave} = this.props;
@@ -72,7 +77,7 @@ let DataSet = React.createClass({
 					height={height} 
 					fill={'none'} 
 					stroke={'none'} 
-					style={{pointerEvents: 'all'}}
+					style={{pointerEvents: showTooltip ? 'all' : 'none'}}
 					onMouseMove={ evt => { onMouseEnter(evt, data); } }
 					onMouseLeave={  evt => { onMouseLeave(evt); } }
 				/>
@@ -147,6 +152,7 @@ let AreaChart = React.createClass({
 			 lineStrokeWidth,
 			 offset,
 			 values,
+			 showTooltip,
 			 label,
 			 x,
 			 y,
@@ -197,6 +203,7 @@ let AreaChart = React.createClass({
 					lineStrokeWidth={lineStrokeWidth}
 					label={label}
 					values={values}
+					showTooltip={showTooltip}
 					onMouseEnter={this.onMouseEnter}
 					onMouseLeave={this.onMouseLeave}
 				/>

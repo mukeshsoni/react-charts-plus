@@ -19,7 +19,11 @@ let DataSet = React.createClass({
 		line: React.PropTypes.func.isRequired,
 		colorScale: React.PropTypes.func.isRequired
 	},
-
+	getDefaultProps: function() {
+		return {
+			showTooltip: true
+		}
+	},
 	render() {
 		let {width,
 			 height,
@@ -32,6 +36,7 @@ let DataSet = React.createClass({
 			 values,
 			 label,
 			 onMouseEnter,
+			 showTooltip,
 			 onMouseLeave} = this.props;
 
 		let lines = data.map((stack, index) => {
@@ -61,10 +66,10 @@ let DataSet = React.createClass({
 				<g>
 				<g dangerouslySetInnerHTML={{__html: `<defs><clipPath id="lineClip">${rect}`}}/>
 				{lines}
-				<rect width={width} height={height} fill={'none'} stroke={'none'} style={{pointerEvents: 'all'}}
-			onMouseMove={ evt => { onMouseEnter(evt, data); } }
-			onMouseLeave={  evt => { onMouseLeave(evt); } }
-				/>
+				<rect width={width} height={height} fill={'none'} stroke={'none'} style={{pointerEvents: showTooltip ? 'all' : 'none'}}
+										onMouseMove={ evt => { onMouseEnter(evt, data); } }
+										onMouseLeave={  evt => { onMouseLeave(evt); } }
+											/>
 			</g>
 		);
 	}
@@ -214,6 +219,7 @@ if (Math.abs(xValueCursor - xValueRight) < Math.abs(xValueCursor - xValueLeft)) 
 			 xAxis,
 			 yAxis,
 			 shape,
+			 showTooltip,
 			 shapeColor} = this.props;
 
 		let [data,
@@ -268,6 +274,7 @@ if (Math.abs(xValueCursor - xValueRight) < Math.abs(xValueCursor - xValueLeft)) 
 					onMouseEnter={this.onMouseEnter}
 					onMouseLeave={this.onMouseLeave}
 					{...stroke}
+					showTooltip={showTooltip}
 				/>
 
 				<Axis
