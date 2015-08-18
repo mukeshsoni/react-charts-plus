@@ -59,7 +59,6 @@ let DataSet = React.createClass({
 			showLabel: true
 		};
 	},
-
 	render() {
 		let {pie,
 			 arc,
@@ -105,6 +104,7 @@ let DataSet = React.createClass({
 				);
 			textComponent = (
 					<text
+						opacity={showLabel ? opacity : 0}
 						dy=".35em"
 						x={labelPos[0]}
 						y={labelPos[1]}
@@ -122,7 +122,7 @@ let DataSet = React.createClass({
 							onMouseEnter={onMouseEnter}
 							onMouseLeave={onMouseLeave}
 						/>
-						{showLabel ? polyline : ''}
+						{polyline}
 						{textComponent}
 					</g>
 			);
