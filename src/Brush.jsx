@@ -6,6 +6,14 @@ let Axis = require('./Axis');
 
 let HeightWidthMixin = require('./HeightWidthMixin');
 
+function mergeObjects(obj1, obj2) {
+	for (var attrname in obj2) { 
+		obj1[attrname] = obj2[attrname]; 
+	}
+
+	return obj1;
+}
+
 // Adapted for React from https://github.com/mbostock/d3/blob/master/src/svg/brush.js
 // TODO: Add D3 License
 let _d3_svg_brushCursor = {
@@ -29,7 +37,21 @@ let _d3_svg_brushResizes = [
 // TODO: add y axis support
 let Brush = React.createClass({
 	mixins: [HeightWidthMixin],
+	propTypes: {
+		extent: React.PropTypes.array.isRequired,
 
+		// The extent, i.e. the selected period, is initialized by the parent but is later fully controlled by Brush component
+		// But there might be scenarios when the parent wants to reset the extent to some value
+		resetExtent: React.PropTypes.bool,
+
+		backgroundStyle: React.PropTypes.object,
+		extentSelectorStyle: React.PropTypes.object,
+
+		/**
+		 * Gives the user of the brush to send custom react element to set as background
+		 */
+		backgroundElement: React.PropTypes.element
+	},
 	getInitialState() {
 		return {
 			resizers:  _d3_svg_brushResizes[0],
@@ -59,7 +81,7 @@ let Brush = React.createClass({
 		// when <Brush/> is used inside a component
 		// we should not set the extent prop on every redraw of the parent, because it will
 		// stop us from actually setting the extent with the brush.
-		if (nextProps.xScale !== this.props.xScale) {
+		if (nextProps.xScale !== this.props.xScale || nextProps.resetExtent === true) {
 			this._extent(nextProps.extent, nextProps.xScale);
 			this.setState({
 				resizers: _d3_svg_brushResizes[!(this.props.xScale) << 1 | !(this.props.yScale)]
@@ -71,24 +93,27 @@ let Brush = React.createClass({
 		// TODO: remove this.state this.props
 		let xRange = this.props.xScale ? this._d3_scaleRange(this.props.xScale) : null;
 		let yRange = this.props.yScale ? this._d3_scaleRange(this.props.yScale) : null;
+		let backgroundStyle = { visibility: 'visible', cursor: 'crosshair' };
 
 		let background = <rect
-		className="background"
-		style={{ visibility: 'visible', cursor: 'crosshair' }}
-		x={xRange ? xRange[0] : ""}
-		width={xRange ? xRange[1] - xRange[0] : ""}
-		y={yRange ? yRange[0] : ""}
-		height={yRange ? yRange[1] - yRange[0] : this._innerHeight}
-		onMouseDown={this._onMouseDownBackground}
-			/>;
+							className="background"
+							style={mergeObjects(backgroundStyle, this.props.backgroundStyle)}
+							x={xRange ? xRange[0] : ""}
+							width={xRange ? xRange[1] - xRange[0] : ""}
+							y={yRange ? yRange[0] : ""}
+							height={yRange ? yRange[1] - yRange[0] : this._innerHeight}
+							onMouseDown={this._onMouseDownBackground}
+								/>;
 
 		// TODO: it seems like actually we can have both x and y scales at the same time. need to find example.
 
 		let extent;
+		let extentSelectorStyle = {cursor: 'move'};
+
 		if (this.props.xScale) {
 			extent = <rect
 			className="extent"
-			style={{ cursor: 'move' }}
+			style={mergeObjects(extentSelectorStyle, this.props.extentSelectorStyle)}
 			x={this.state.xExtent[0]}
 			width={this.state.xExtent[1] - this.state.xExtent[0]}
 			height={this._innerHeight}
