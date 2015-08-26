@@ -213,6 +213,10 @@ let Brush = React.createClass({
 		this._resizeDir = dir;
 	},
 
+	callOnChangeCallback() {
+		this.props.onChange(this._extent());
+	},
+
 	_onDrag(e) {
 		let range = this._d3_scaleRange(this.props.xScale);
 		let point = this._getMousePosition(e);
@@ -223,7 +227,7 @@ let Brush = React.createClass({
 
 		let min = Math.max(range[0], Math.min(range[1], point[0] - this._startPosition));
 
-		this.setState({xExtent: [min, min + size], xExtentDomain: null});
+		this.setState({xExtent: [min, min + size], xExtentDomain: null}, this.callOnChangeCallback);
 	},
 
 	_onResize(e) {
@@ -235,17 +239,17 @@ let Brush = React.createClass({
 
 		if (this._resizeDir == "w") {
 			if (min > this.state.xExtent[1]) {
-				this.setState({xExtent: [this.state.xExtent[1], min], xExtentDomain: null});
+				this.setState({xExtent: [this.state.xExtent[1], min], xExtentDomain: null}, this.callOnChangeCallback);
 				this._resizeDir = "e";
 			} else {
-				this.setState({xExtent: [min, this.state.xExtent[1]], xExtentDomain: null});
+				this.setState({xExtent: [min, this.state.xExtent[1]], xExtentDomain: null}, this.callOnChangeCallback);
 			}
 		} else if (this._resizeDir == "e") {
 			if (min < this.state.xExtent[0]) {
-				this.setState({xExtent: [min, this.state.xExtent[0]], xExtentDomain: null});
+				this.setState({xExtent: [min, this.state.xExtent[0]], xExtentDomain: null}, this.callOnChangeCallback);
 				this._resizeDir = "w";
 			} else {
-				this.setState({xExtent: [this.state.xExtent[0], min], xExtentDomain: null});
+				this.setState({xExtent: [this.state.xExtent[0], min], xExtentDomain: null}, this.callOnChangeCallback);
 			}
 		}
 	},
