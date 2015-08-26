@@ -1,6 +1,8 @@
-# react-d3-components
+# react-charts-plus
 
-> D3 Components for React
+This is a fork of great react-d3-components repo. I have forked it since we needed to add stuff in our org which might not have been generic enough for react-d3-component users.
+
+> D3 Charts for React
 
 Let React have complete control over the DOM even when using D3. This way we can benefit from Reacts Virtual DOM.
 
