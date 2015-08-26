@@ -1,6 +1,6 @@
 # react-charts-plus
 
-This is a fork of great react-d3-components repo. I have forked it since we needed to add stuff in our org which might not have been generic enough for react-d3-component users.
+This is a fork of great [react-d3-components](https://github.com/codesuki/react-d3-components) repo. I have forked it since we needed to add stuff in our org which might not have been generic enough for react-d3-component users.
 
 > D3 Charts for React
 
