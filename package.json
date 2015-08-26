@@ -1,11 +1,11 @@
 {
-  "name": "react-d3-components",
-  "version": "0.4.8",
-  "description": "D3 components for React",
+  "name": "react-charts-plus",
+  "version": "0.1.0",
+  "description": "D3 charts for React",
   "main": "lib/index.js",
   "repository": {
 	"type": "git",
-	"url": "https://github.com/codesuki/react-d3-components.git"
+	"url": "https://github.com/mukeshsoni/react-charts-plus/"
   },
   "keywords": [
 	"d3",
@@ -15,12 +15,12 @@
 	"chart",
 	"react-component"
   ],
-  "author": "Neri Marschik <marschik_neri@cyberagent.co.jp> (http://www.cyberagent.co.jp)",
+  "author": "Mukesh Soni <mukeshsoni@gmail.com>",
   "license": "MIT",
   "bugs": {
-	"url": "https://github.com/codesuki/react-d3-components/issues"
+	"url": "https://github.com/mukeshsoni/react-charts-plus/issues"
   },
-  "homepage": "https://github.com/codesuki/react-d3-components",
+  "homepage": "https://github.com/mukeshsoni/react-charts-plus/",
   "dependencies": {
 	"d3": "^3.5.3",
 	"react": "^0.13.1"

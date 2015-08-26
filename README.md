@@ -28,7 +28,7 @@ Let React have complete control over the DOM even when using D3. This way we can
 
 ## Installation
 ```
-npm install react-d3-components
+npm install react-charts-plus
 ```
 
 ## Description
@@ -38,7 +38,6 @@ I try to provide sensible defaults, but since for most use-cases we need to cust
 If you like the project please consider starring and a pull request. I am open for any additions.
 
 ## Documentation
-Documentation is in the [Wiki](https://github.com/codesuki/react-d3-components/wiki).
 For quick testing the [examples](#examples) might be enough.
 
 ## Features
@@ -444,4 +443,5 @@ React.render(<PieChart
 ![piechart](http://codesuki.github.io/react-d3-components/piechart.png)
 
 ## Credits
+It is a fork of [react-d3-components](https://github.com/codesuki/react-d3-components)
 This library uses parts of [D3.js](https://github.com/mbostock/d3).
