@@ -17,20 +17,20 @@ function mergeObjects(obj1, obj2) {
 // Adapted for React from https://github.com/mbostock/d3/blob/master/src/svg/brush.js
 // TODO: Add D3 License
 let _d3_svg_brushCursor = {
-	n: "ns-resize",
-	e: "ew-resize",
-	s: "ns-resize",
-	w: "ew-resize",
-	nw: "nwse-resize",
-	ne: "nesw-resize",
-	se: "nwse-resize",
-	sw: "nesw-resize"
+	n: 'ns-resize',
+	e: 'ew-resize',
+	s: 'ns-resize',
+	w: 'ew-resize',
+	nw: 'nwse-resize',
+	ne: 'nesw-resize',
+	se: 'nwse-resize',
+	sw: 'nesw-resize'
 };
 
 let _d3_svg_brushResizes = [
-	["n", "e", "s", "w", "nw", "ne", "se", "sw"],
-	["e", "w"],
-	["n", "s"],
+	['n', 'e', 's', 'w', 'nw', 'ne', 'se', 'sw'],
+	['e', 'w'],
+	['n', 's'],
 	[]
 ];
 
@@ -71,10 +71,17 @@ let Brush = React.createClass({
 
 	componentWillMount() {
 		this._extent(this.props.extent);
-
 		this.setState({
 			resizers: _d3_svg_brushResizes[!(this.props.xScale) << 1 | !(this.props.yScale)]
 		});
+
+		document.addEventListener('mouseup', this._onMouseUp);
+		document.addEventListener('mousemove', this._onMouseMove);
+	},
+
+	componentWillUnmount() {
+		document.removeEventListener('mouseup', this._onMouseUp);
+		document.removeEventListener('mousemove', this._onMouseMove);	
 	},
 
 	componentWillReceiveProps(nextProps) {
@@ -96,11 +103,11 @@ let Brush = React.createClass({
 		let backgroundStyle = { visibility: 'visible', cursor: 'crosshair' };
 
 		let background = <rect
-							className="background"
+							className='background'
 							style={mergeObjects(backgroundStyle, this.props.backgroundStyle)}
-							x={xRange ? xRange[0] : ""}
-							width={xRange ? xRange[1] - xRange[0] : ""}
-							y={yRange ? yRange[0] : ""}
+							x={xRange ? xRange[0] : ''}
+							width={xRange ? xRange[1] - xRange[0] : ''}
+							y={yRange ? yRange[0] : ''}
 							height={yRange ? yRange[1] - yRange[0] : this._innerHeight}
 							onMouseDown={this._onMouseDownBackground}
 								/>;
@@ -133,9 +140,9 @@ let Brush = React.createClass({
 					<rect
 				x={/[ew]$/.test(e) ? -3 : null}
 				y={/^[ns]/.test(e) ? -3 : null}
-				width="6"
+				width="10"
 				height={this._innerHeight}
-				style={{ visibility: 'hidden', display: this._empty() ? "none" : null }}
+				style={{ display: this._empty() ? 'none' : null }}
 					/>
 					</g>
 			);
@@ -167,7 +174,7 @@ let Brush = React.createClass({
 
 	// TODO: Code duplicated in TooltipMixin.jsx, move outside.
 	_getMousePosition(e) {
-		let svg = this.getDOMNode().getElementsByTagName("svg")[0];
+		let svg = this.getDOMNode().getElementsByTagName('svg')[0];
 		let position;
 		if (svg.createSVGPoint) {
 			var point = svg.createSVGPoint();
@@ -199,7 +206,7 @@ let Brush = React.createClass({
 	// TODO: use constants instead of strings
 	_onMouseDownExtent(e) {
 		e.preventDefault();
-		this._mouseMode = "drag";
+		this._mouseMode = 'drag';
 
 		let point = this._getMousePosition(e);
 		let distanceFromBorder = point[0] - this.state.xExtent[0];
@@ -209,7 +216,7 @@ let Brush = React.createClass({
 
 	_onMouseDownResizer(e, dir) {
 		e.preventDefault();
-		this._mouseMode = "resize";
+		this._mouseMode = 'resize';
 		this._resizeDir = dir;
 	},
 
@@ -237,17 +244,17 @@ let Brush = React.createClass({
 		// TODO: support clamp argument of D3
 		let min = Math.max(range[0], Math.min(range[1], point[0]));
 
-		if (this._resizeDir == "w") {
+		if (this._resizeDir == 'w') {
 			if (min > this.state.xExtent[1]) {
 				this.setState({xExtent: [this.state.xExtent[1], min], xExtentDomain: null}, this.callOnChangeCallback);
-				this._resizeDir = "e";
+				this._resizeDir = 'e';
 			} else {
 				this.setState({xExtent: [min, this.state.xExtent[1]], xExtentDomain: null}, this.callOnChangeCallback);
 			}
-		} else if (this._resizeDir == "e") {
+		} else if (this._resizeDir == 'e') {
 			if (min < this.state.xExtent[0]) {
 				this.setState({xExtent: [min, this.state.xExtent[0]], xExtentDomain: null}, this.callOnChangeCallback);
-				this._resizeDir = "w";
+				this._resizeDir = 'w';
 			} else {
 				this.setState({xExtent: [this.state.xExtent[0], min], xExtentDomain: null}, this.callOnChangeCallback);
 			}
@@ -257,9 +264,9 @@ let Brush = React.createClass({
 	_onMouseMove(e) {
 		e.preventDefault();
 
-		if (this._mouseMode == "resize") {
+		if (this._mouseMode == 'resize') {
 			this._onResize(e);
-		} else if (this._mouseMode == "drag") {
+		} else if (this._mouseMode == 'drag') {
 			this._onDrag(e);
 		}
 	},
