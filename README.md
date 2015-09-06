@@ -1,6 +1,6 @@
 # react-charts-plus
 
-This is a fork of great [react-d3-components](https://github.com/codesuki/react-d3-components) repo. I have forked it since we needed to add stuff in our org which might not have been generic enough for react-d3-component users.
+This is a fork of awesome [react-d3-components](https://github.com/codesuki/react-d3-components) repo. I have forked it since we needed to add stuff in our org which might not have been generic enough for react-d3-component users.
 
 Some of the things i have done extra - 
 - allow user of brush to send in custom styles and classnames for extent and background
@@ -13,10 +13,11 @@ Some of the things i have done extra -
 - pass xIndex as the third parameter to the `customTooltip` callback
 - allow for more types for stroke and stroke width props for path. and allow React element to be passed for tooltip html
 - changed label positioning for y-axis
+- allow user to send custom react element as brush background
 
 Things i plan to add - 
-- allow user to send custom react element as brush background
-- 
+- You let me know!
+
 > D3 Charts for React
 
 Let React have complete control over the DOM even when using D3. This way we can benefit from Reacts Virtual DOM.
