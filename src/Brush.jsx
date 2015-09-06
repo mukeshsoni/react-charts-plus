@@ -34,23 +34,75 @@ let _d3_svg_brushResizes = [
 	[]
 ];
 
+function getResizerElement(e, width, height, style, isEmpty, xExtent, yExtent, onMouseDown) {
+	let extentSelectorStyle = { cursor: _d3_svg_brushCursor[e] };
+
+	return (
+		<g
+			key={e}
+			className={`resize ${e}`}
+			style={mergeObjects(extentSelectorStyle, style)}
+			transform={`translate(${xExtent[+/e$/.test(e)]}, ${yExtent[+/^s/.test(e)]})`}
+			onMouseDown={(event) => { onMouseDown(event, e); }}>
+			<rect
+				x={/[ew]$/.test(e) ? -3 : null}
+				y={/^[ns]/.test(e) ? -3 : null}
+				width={width}
+				height={height}
+				style={{ display: isEmpty ? 'none' : null }}
+			/>
+		</g>
+	);
+}
+
+function getBackgroundElement(style, xRange, yRange, height, onMouseDown) {
+	let backgroundStyle = { visibility: 'visible', cursor: 'crosshair' };
+
+	return (
+		<rect
+			className='background'
+			style={mergeObjects(backgroundStyle, style)}
+			x={xRange ? xRange[0] : ''}
+			width={xRange ? xRange[1] - xRange[0] : ''}
+			y={yRange ? yRange[0] : ''}
+			height={yRange ? yRange[1] - yRange[0] : height}
+			onMouseDown={onMouseDown}
+		/>
+	);
+}
+
+function getExtentElement(style, xExtent, height, onMouseDown) {
+	let extentStyle = {cursor: 'move'};
+
+	return (
+		<rect
+			className="extent"
+			style={mergeObjects(extentStyle, style)}
+			x={xExtent[0]}
+			width={xExtent[1] - xExtent[0]}
+			height={height}
+			onMouseDown={onMouseDown}
+		/>
+	);
+}
+
 // TODO: add y axis support
 let Brush = React.createClass({
 	mixins: [HeightWidthMixin],
 	propTypes: {
 		extent: React.PropTypes.array.isRequired,
-
+		xAxis: React.PropTypes.object,
 		// The extent, i.e. the selected period, is initialized by the parent but is later fully controlled by Brush component
-		// But there might be scenarios when the parent wants to reset the extent to some value
+		// But there might be scenarios when the parent wants to reset the extent to some value (keeping the scale same)
 		resetExtent: React.PropTypes.bool,
 
 		backgroundStyle: React.PropTypes.object,
+		extentStyle: React.PropTypes.object,
 		extentSelectorStyle: React.PropTypes.object,
 
-		/**
-		 * Gives the user of the brush to send custom react element to set as background
-		 */
-		backgroundElement: React.PropTypes.element
+		getResizerElement: React.PropTypes.func,
+		getBackgroundElement: React.PropTypes.func,
+		getExtentElement: React.PropTypes.func
 	},
 	getInitialState() {
 		return {
@@ -65,7 +117,10 @@ let Brush = React.createClass({
 	getDefaultProps() {
 		return {
 			xScale: null,
-			yScale: null
+			yScale: null,
+			getResizerElement: getResizerElement,
+			getBackgroundElement: getBackgroundElement,
+			getExtentElement: getExtentElement
 		};
 	},
 
@@ -100,52 +155,30 @@ let Brush = React.createClass({
 		// TODO: remove this.state this.props
 		let xRange = this.props.xScale ? this._d3_scaleRange(this.props.xScale) : null;
 		let yRange = this.props.yScale ? this._d3_scaleRange(this.props.yScale) : null;
-		let backgroundStyle = { visibility: 'visible', cursor: 'crosshair' };
-
-		let background = <rect
-							className='background'
-							style={mergeObjects(backgroundStyle, this.props.backgroundStyle)}
-							x={xRange ? xRange[0] : ''}
-							width={xRange ? xRange[1] - xRange[0] : ''}
-							y={yRange ? yRange[0] : ''}
-							height={yRange ? yRange[1] - yRange[0] : this._innerHeight}
-							onMouseDown={this._onMouseDownBackground}
-								/>;
+		
+		let background = this.props.getBackgroundElement(
+										this.props.backgroundStyle, 
+										xRange, 
+										yRange, 
+										this._innerHeight,
+										this._onMouseDownBackground);
 
 		// TODO: it seems like actually we can have both x and y scales at the same time. need to find example.
 
 		let extent;
-		let extentSelectorStyle = {cursor: 'move'};
 
 		if (this.props.xScale) {
-			extent = <rect
-			className="extent"
-			style={mergeObjects(extentSelectorStyle, this.props.extentSelectorStyle)}
-			x={this.state.xExtent[0]}
-			width={this.state.xExtent[1] - this.state.xExtent[0]}
-			height={this._innerHeight}
-			onMouseDown={this._onMouseDownExtent}
-				/>;
+			extent = this.props.getExtentElement(
+									this.props.extentStyle,
+									this.state.xExtent,
+									this._innerHeight,
+									this._onMouseDownExtent);
 		}
 
-		let resizers = this.state.resizers.map(e => {
-			return (
-					<g
-				key={e}
-				className={`resize ${e}`}
-				style={{ cursor: _d3_svg_brushCursor[e] }}
-				transform={`translate(${this.state.xExtent[+/e$/.test(e)]}, ${this.state.yExtent[+/^s/.test(e)]})`}
-				onMouseDown={(event) => { this._onMouseDownResizer(event, e); }}
-					>
-					<rect
-				x={/[ew]$/.test(e) ? -3 : null}
-				y={/^[ns]/.test(e) ? -3 : null}
-				width="10"
-				height={this._innerHeight}
-				style={{ display: this._empty() ? 'none' : null }}
-					/>
-					</g>
-			);
+		let resizers = this.state.resizers.map((e) => {
+			// (e, width, height, style, isEmpty, xExtent, yExtent, onMouseDown)
+			return this.props.getResizerElement(e, 10, this._innerHeight, this.props.extentSelectorStyle, 
+											this._empty(), this.state.xExtent, this.state.yExtent, this._onMouseDownResizer);
 		});
 
 		return (
