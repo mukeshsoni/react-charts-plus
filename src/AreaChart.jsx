@@ -60,6 +60,7 @@ let DataSet = React.createClass({
 		let lines = data.map((stack, index) => {
 			return (
 					<Path
+				key={`${label(stack)}.${index}`}
 				className="line"
 				d={line(values(stack))}
 				stroke={stroke(label(stack), index)}

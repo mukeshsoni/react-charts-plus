@@ -21,8 +21,6 @@ module.exports = {
 		library: "ReactD3",
 		libraryTarget: "umd",
 		path: distPath,
-		// path: path.resolve(__dirname, "dist"),
-		// path: '/Users/mukesh/Desktop/pp/frontend/harmony/src/pp/shared/vendor/',
 		filename: "react-d3-components.js"
 	},
 	module: {

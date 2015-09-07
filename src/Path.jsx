@@ -6,7 +6,8 @@ let Path = React.createClass({
 		className: React.PropTypes.string,
 		stroke: React.PropTypes.oneOfType([
 			React.PropTypes.string,
-			React.PropTypes.number
+			React.PropTypes.number,
+			React.PropTypes.object
 	    ]),
 		strokeLinecap: React.PropTypes.oneOfType([
 			React.PropTypes.string,

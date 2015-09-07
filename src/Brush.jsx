@@ -131,12 +131,14 @@ let Brush = React.createClass({
 		});
 
 		document.addEventListener('mouseup', this._onMouseUp);
+		// document.addEventListener('mouseout', this._onMouseUp);
 		document.addEventListener('mousemove', this._onMouseMove);
 	},
 
 	componentWillUnmount() {
 		document.removeEventListener('mouseup', this._onMouseUp);
-		document.removeEventListener('mousemove', this._onMouseMove);	
+		// document.removeEventListener('mouseout', this._onMouseUp);
+		document.removeEventListener('mousemove', this._onMouseMove);
 	},
 
 	componentWillReceiveProps(nextProps) {
@@ -181,13 +183,13 @@ let Brush = React.createClass({
 											this._empty(), this.state.xExtent, this.state.yExtent, this._onMouseDownResizer);
 		});
 
+			// onMouseUp={this._onMouseUp}
+			// onMouseMove={this._onMouseMove}
 		return (
 				<div>
 				<Chart height={this.props.height} width={this.props.width} margin={this.props.margin}>
 				<g
 			style={{ pointerEvents: 'all' }}
-			onMouseUp={this._onMouseUp}
-			onMouseMove={this._onMouseMove}
 				>
 				{background}{extent}{resizers}
 			</g>

@@ -38,7 +38,6 @@ let DataSet = React.createClass({
 			 onMouseEnter,
 			 showTooltip,
 			 onMouseLeave} = this.props;
-
 		let lines = data.map((stack, index) => {
 			return (
 					<Path
