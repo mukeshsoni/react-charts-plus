@@ -102,7 +102,12 @@ let Brush = React.createClass({
 
 		getResizerElement: React.PropTypes.func,
 		getBackgroundElement: React.PropTypes.func,
-		getExtentElement: React.PropTypes.func
+		getExtentElement: React.PropTypes.func,
+
+		/**
+		 * to lock one of the ends of the extent selector
+		 */
+		lockExtent: React.PropTypes.string
 	},
 	getInitialState() {
 		return {
@@ -177,11 +182,18 @@ let Brush = React.createClass({
 									this._onMouseDownExtent);
 		}
 
-		let resizers = this.state.resizers.map((e) => {
-			// (e, width, height, style, isEmpty, xExtent, yExtent, onMouseDown)
-			return this.props.getResizerElement(e, 10, this._innerHeight, this.props.extentSelectorStyle, 
-											this._empty(), this.state.xExtent, this.state.yExtent, this._onMouseDownResizer);
-		});
+		let resizers = this.state.resizers
+								.filter((e) => {
+									if(this.props.lockExtent === 'right' && e === 'e' || this.props.lockExtent === 'left' && e === 'w') {
+										return false;
+									}
+									return true;
+								})
+								.map((e) => {
+									// (e, width, height, style, isEmpty, xExtent, yExtent, onMouseDown)
+									return this.props.getResizerElement(e, 10, this._innerHeight, this.props.extentSelectorStyle, 
+																	this._empty(), this.state.xExtent, this.state.yExtent, this._onMouseDownResizer);
+								});
 
 			// onMouseUp={this._onMouseUp}
 			// onMouseMove={this._onMouseMove}
@@ -297,21 +309,21 @@ let Brush = React.createClass({
 	},
 
 	_onMouseMove(e) {
-		e.preventDefault();
-
 		if (this._mouseMode == 'resize') {
+			e.preventDefault();
 			this._onResize(e);
 		} else if (this._mouseMode == 'drag') {
+			e.preventDefault();
 			this._onDrag(e);
 		}
 	},
 
 	_onMouseUp(e) {
-		e.preventDefault();
-
-		this._mouseMode = null;
-
-		this.props.onChange(this._extent());
+		if(this._mouseMode) {
+			e.preventDefault();
+			this._mouseMode = null;
+			this.props.onChange(this._extent());
+		}
 	},
 
 	_extent(z, xScale) {
