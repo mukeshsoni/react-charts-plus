@@ -125,7 +125,8 @@ let Brush = React.createClass({
 			yScale: null,
 			getResizerElement: getResizerElement,
 			getBackgroundElement: getBackgroundElement,
-			getExtentElement: getExtentElement
+			getExtentElement: getExtentElement,
+			lockExtent: null
 		};
 	},
 
@@ -272,16 +273,18 @@ let Brush = React.createClass({
 	},
 
 	_onDrag(e) {
-		let range = this._d3_scaleRange(this.props.xScale);
-		let point = this._getMousePosition(e);
+		if(!this.props.lockExtent) {
+			let range = this._d3_scaleRange(this.props.xScale);
+			let point = this._getMousePosition(e);
 
-		let size = this.state.xExtent[1] - this.state.xExtent[0];
+			let size = this.state.xExtent[1] - this.state.xExtent[0];
 
-		range[1] -= size;
+			range[1] -= size;
 
-		let min = Math.max(range[0], Math.min(range[1], point[0] - this._startPosition));
+			let min = Math.max(range[0], Math.min(range[1], point[0] - this._startPosition));
 
-		this.setState({xExtent: [min, min + size], xExtentDomain: null}, this.callOnChangeCallback);
+			this.setState({xExtent: [min, min + size], xExtentDomain: null}, this.callOnChangeCallback);
+		}
 	},
 
 	_onResize(e) {
