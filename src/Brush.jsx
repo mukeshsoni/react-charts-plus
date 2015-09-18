@@ -7,8 +7,8 @@ let Axis = require('./Axis');
 let HeightWidthMixin = require('./HeightWidthMixin');
 
 function mergeObjects(obj1, obj2) {
-	for (var attrname in obj2) { 
-		obj1[attrname] = obj2[attrname]; 
+	for (var attrname in obj2) {
+		obj1[attrname] = obj2[attrname];
 	}
 
 	return obj1;
@@ -55,7 +55,7 @@ function getResizerElement(e, width, height, style, isEmpty, xExtent, yExtent, o
 	);
 }
 
-function getBackgroundElement(style, xRange, yRange, height, onMouseDown) {
+function getBackgroundElement(style, xExtent, xRange, yRange, height, onMouseDown) {
 	let backgroundStyle = { visibility: 'visible', cursor: 'crosshair' };
 
 	return (
@@ -163,11 +163,12 @@ let Brush = React.createClass({
 		// TODO: remove this.state this.props
 		let xRange = this.props.xScale ? this._d3_scaleRange(this.props.xScale) : null;
 		let yRange = this.props.yScale ? this._d3_scaleRange(this.props.yScale) : null;
-		
+
 		let background = this.props.getBackgroundElement(
-										this.props.backgroundStyle, 
-										xRange, 
-										yRange, 
+										this.props.backgroundStyle,
+										this.state.xExtent,
+										xRange,
+										yRange,
 										this._innerHeight,
 										this._onMouseDownBackground);
 
@@ -192,7 +193,7 @@ let Brush = React.createClass({
 								})
 								.map((e) => {
 									// (e, width, height, style, isEmpty, xExtent, yExtent, onMouseDown)
-									return this.props.getResizerElement(e, 10, this._innerHeight, this.props.extentSelectorStyle, 
+									return this.props.getResizerElement(e, 10, this._innerHeight, this.props.extentSelectorStyle,
 																	this._empty(), this.state.xExtent, this.state.yExtent, this._onMouseDownResizer);
 								});
 
@@ -248,7 +249,16 @@ let Brush = React.createClass({
 		range[1] -= size;
 
 		let min = Math.max(range[0], Math.min(range[1], point[0]));
-		this.setState({xExtent: [min, min + size]});
+		let xExtent = [min, min + size];
+		if(this.props.lockExtent === 'right') {
+			xExtent[1] = this.state.xExtent[1];
+		}
+
+		if(this.props.lockExtent === 'left') {
+			xExtent[0] = this.state.xExtent[0];
+		}
+
+		this.setState({xExtent: xExtent});
 	},
 
 	// TODO: use constants instead of strings
