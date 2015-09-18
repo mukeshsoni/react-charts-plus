@@ -73,13 +73,17 @@ function getBackgroundElement(style, xExtent, xRange, yRange, height, onMouseDow
 
 function getExtentElement(style, xExtent, height, onMouseDown) {
 	let extentStyle = {cursor: 'move'};
+	var width = xExtent[1] - xExtent[0];
+	if(xExtent[0] < 0) {
+		width += xExtent[0];
+	}
 
 	return (
 		<rect
 			className="extent"
 			style={mergeObjects(extentStyle, style)}
-			x={xExtent[0]}
-			width={xExtent[1] - xExtent[0]}
+			x={xExtent[0] >= 0 ? xExtent[0] : 0}
+			width={width}
 			height={height}
 			onMouseDown={onMouseDown}
 		/>
