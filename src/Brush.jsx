@@ -339,7 +339,7 @@ let Brush = React.createClass({
 		if(this._mouseMode) {
 			e.preventDefault();
 			this._mouseMode = null;
-			this.props.onChange(this._extent());
+			this.props.onChange(this._extent(), e);
 		}
 	},
 
