@@ -262,7 +262,7 @@ let Brush = React.createClass({
 			xExtent[0] = this.state.xExtent[0];
 		}
 
-		this.setState({xExtent: xExtent});
+		this.setState({xExtent: xExtent, xExtentDomain: null}, this.callOnChangeCallback);
 	},
 
 	// TODO: use constants instead of strings
