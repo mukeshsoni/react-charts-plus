@@ -13,6 +13,7 @@
   <div id="barchart"></div>
   <div id="barchart2"></div>
   <div id="stackedbarchart"></div>
+  <div id="groupedbarchart"></div>
   <div id="scatterplot"></div>
   <div id="scatterplot2"></div>
   <div id="scatterplot3"></div>
@@ -187,6 +188,19 @@ var SomeComponent = React.createClass({
 	   />,
 	document.getElementById('stackedbarchart')
 	);
+
+	React.render(
+	    <BarChart
+	        data={data}
+	        width={400}
+	        height={400}
+	        margin={{top: 10, bottom: 50, left: 50, right: 10}}
+	        tooltipHtml={tooltip}
+	        tooltipMode={'mouse'}
+	        groupedBars={true}
+	    />,
+	    document.getElementById('groupedbarchart')
+	    );
 
 	data = {
 	label: 'somethingA',
