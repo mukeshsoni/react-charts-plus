@@ -21,9 +21,11 @@
     "url": "https://github.com/mukeshsoni/react-charts-plus/issues"
   },
   "homepage": "https://github.com/mukeshsoni/react-charts-plus/",
-  "dependencies": {
-    "d3": "^3.5.3",
+  "peerDependencies": {    
     "react": "^0.13.1"
+  },
+  "dependencies": {
+    "d3": "^3.5.3"
   },
   "devDependencies": {
     "babel": "^4.6.4",
