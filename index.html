@@ -13,6 +13,7 @@
   <div id="barchart"></div>
   <div id="barchart2"></div>
   <div id="stackedbarchart"></div>
+  <div id="groupedbarchart"></div>
   <div id="scatterplot"></div>
   <div id="scatterplot2"></div>
   <div id="scatterplot3"></div>
@@ -23,6 +24,7 @@
   <div id="areachart2"></div>
   <div id="stackedareachart"></div>
   <div id="piechart"></div>
+  <div id="horizontalbarchart"></div>
 
   <script type="text/jsx;harmony=true">
 	var BarChart = ReactD3.BarChart;
@@ -30,6 +32,7 @@
 	var AreaChart = ReactD3.AreaChart;
 	var ScatterPlot = ReactD3.ScatterPlot;
 	var LineChart = ReactD3.LineChart;
+	var HorizontalBarChart = ReactD3.HorizontalBarChart;
 	var Brush = ReactD3.Brush;
 
 	var tooltipLine = function(label, data) {
@@ -137,6 +140,18 @@ var SomeComponent = React.createClass({
 	   />,
 	document.getElementById('barchart')
 	);
+
+	React.render(
+		<HorizontalBarChart
+		   data={data}
+		   width={480}
+		   height={400}
+		   margin={{top: 20, bottom: 0, left: 75, right: 25}}
+		   tooltipHtml={tooltip}
+		   />,
+		document.getElementById('horizontalbarchart')
+	);
+
 /*
 	data = [{
 	customLabel: 'somethingA',
@@ -187,6 +202,19 @@ var SomeComponent = React.createClass({
 	   />,
 	document.getElementById('stackedbarchart')
 	);
+
+	React.render(
+	    <BarChart
+	        data={data}
+	        width={400}
+	        height={400}
+	        margin={{top: 10, bottom: 50, left: 50, right: 10}}
+	        tooltipHtml={tooltip}
+	        tooltipMode={'mouse'}
+	        groupedBars={true}
+	    />,
+	    document.getElementById('groupedbarchart')
+	    );
 
 	data = {
 	label: 'somethingA',
