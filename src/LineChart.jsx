@@ -38,6 +38,8 @@ let DataSet = React.createClass({
 			 onMouseEnter,
 			 showTooltip,
 			 onMouseLeave} = this.props;
+
+		let sizeId = width + 'x' + height;	
 		let lines = data.map((stack, index) => {
 			return (
 					<Path
@@ -51,7 +53,7 @@ let DataSet = React.createClass({
 				data={values(stack)}
 				onMouseEnter={onMouseEnter}
 				onMouseLeave={onMouseLeave}
-				style={{clipPath: 'url(#lineClip)'}}
+				style={{clipPath: 'url(#lineClip_' + sizeId + ')'}}
 					/>
 			);
 		});
@@ -63,7 +65,7 @@ let DataSet = React.createClass({
 		let rect = React.renderToString(<rect width={width} height={height}/>);
 		return (
 				<g>
-				<g dangerouslySetInnerHTML={{__html: `<defs><clipPath id="lineClip">${rect}`}}/>
+				<g dangerouslySetInnerHTML={{__html: `<defs><clipPath id="lineClip_"+sizeId>${rect}`}}/>
 				{lines}
 				<rect width={width} height={height} fill={'none'} stroke={'none'} style={{pointerEvents: showTooltip ? 'all' : 'none'}}
 										onMouseMove={ evt => { onMouseEnter(evt, data); } }
