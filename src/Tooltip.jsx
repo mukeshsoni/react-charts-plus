@@ -5,27 +5,28 @@ let Tooltip = React.createClass({
 	propTypes: {
 		top: React.PropTypes.number.isRequired,
 		left: React.PropTypes.number.isRequired,
-		html: React.PropTypes.oneOfType([
-			React.PropTypes.string,
-			React.PropTypes.element
-	    ]),
+		html: React.PropTypes.node,
+		translate: React.PropTypes.number
 	},
 
 	getDefaultProps() {
 		return {
 			top: 150,
 			left: 100,
-			html: ''
+			html: '',
+			translate: 50
 		};
 	},
 
 	render() {
-		let {top, left, hidden, html, position, right} = this.props;
+		let {top, left, hidden, html, position, right, translate} = this.props;
 
 		let style = {
 			display: hidden ? 'none' : 'block',
 			position: 'fixed',
-			top: 'inherit'
+			top: 'inherit',
+			transform: `translate(-${translate}%, 0)`,
+			pointerEvents: 'none'
 		};
 
 		if(position) {

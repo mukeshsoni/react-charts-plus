@@ -3,7 +3,10 @@ let d3 = require('d3');
 
 let TooltipMixin = {
 	propTypes: {
-		tooltipHtml: React.PropTypes.func
+		tooltipHtml: React.PropTypes.func,
+		tooltipMode: React.PropTypes.oneOf(['mouse', 'element', 'fixed']),
+		tooltipContained: React.PropTypes.bool,
+		tooltipOffset: React.PropTypes.objectOf(React.PropTypes.number)
 	},
 
 	getInitialState() {
@@ -16,8 +19,10 @@ let TooltipMixin = {
 
 	getDefaultProps() {
 		return {
-			tooltipOffset: {top: -20, left: 15},
-			tooltipHtml: null
+			tooltipMode: 'mouse',
+			tooltipOffset: {top: -35, left: 0},
+			tooltipHtml: null,
+			tooltipContained: false
 		};
 	},
 
@@ -32,7 +37,11 @@ let TooltipMixin = {
 
 		e.preventDefault();
 
-		let {margin, tooltipHtml} = this.props;
+		let {margin, 
+			 tooltipHtml,
+			 tooltipMode,
+			 tooltipOffset,
+			 tooltipContained} = this.props;
 
 		let svg = this._svg_node;
 		let position;
@@ -47,14 +56,40 @@ let TooltipMixin = {
 						e.clientY - rect.top - svg.clientTop - margin.top];
 		}
 
-		var left = e.clientX + this.props.tooltipOffset.left;
+		let [html, xPos, yPos] = this._tooltipHtml(data, position);
+		let svgTop = svg.getBoundingClientRect().top + margin.top;
+        let svgLeft = svg.getBoundingClientRect().left + margin.left;
+        let top = 0;
+        let left = 0;
+
+        if (tooltipMode === 'fixed') {
+            top = svgTop + tooltipOffset.top;
+            left = svgLeft + tooltipOffset.left;
+        } else if (tooltipMode === 'element') {
+            top = svgTop + yPos + tooltipOffset.top;
+            left = svgLeft + xPos + tooltipOffset.left;
+        } else { // mouse
+            top = e.clientY + tooltipOffset.top;
+            left = e.clientX + tooltipOffset.left;
+        }
+
+        function lerp(t, a, b) {
+            return (1 - t) * a + t * b;
+        }
+
+        let translate = 50;
+        if (tooltipContained) {
+			let t = position[0] / svg.getBoundingClientRect().width;
+			translate = lerp(t, 0, 100);
+        }
 
 		var newTooltip = {
-			top: e.clientY + this.props.tooltipOffset.top,
-			position: ['top', 'left'],
+			top: top,
 			left: left,
 			hidden: false,
-			html: this._tooltipHtml(data, position)
+			position: ['top', 'left'],
+			html: this._tooltipHtml(data, position),
+			translate: translate
 		};
 
 		if(window.innerWidth - e.clientX < 210) {

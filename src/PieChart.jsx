@@ -166,7 +166,9 @@ let PieChart = React.createClass({
 	},
 
 	_tooltipHtml(d, position) {
-		return this.props.tooltipHtml(this.props.x(d), this.props.y(d));
+		let html = this.props.tooltipHtml(this.props.x(d), this.props.y(d));
+
+		return [html, 0, 0];
 	},
 
 	render() {
@@ -249,11 +251,7 @@ let PieChart = React.createClass({
 					{this.props.children}
 				</Chart>
 
-				<Tooltip
-					hidden={this.state.tooltip.hidden}
-					top={this.state.tooltip.top}
-					left={this.state.tooltip.left}
-					html={this.state.tooltip.html}/>
+				<Tooltip {...this.this.state.tooltip}/>
 				</div>
 		);
 	}
