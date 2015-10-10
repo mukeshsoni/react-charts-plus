@@ -226,6 +226,7 @@ let AreaChart = React.createClass({
 			width={innerWidth}
 			{...yAxis}
 				/>
+					{this.props.children}
 				</Chart>
 
 				<Tooltip

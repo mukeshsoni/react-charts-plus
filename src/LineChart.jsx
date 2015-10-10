@@ -295,9 +295,8 @@ if (Math.abs(xValueCursor - xValueRight) < Math.abs(xValueCursor - xValueLeft)) 
 					zero={xIntercept}
 					{...yAxis}
 				/>
-
-				{tooltipSymbol}
-
+					{this.props.children}
+					{tooltipSymbol}
 				</Chart>
 
 				<Tooltip

@@ -246,6 +246,7 @@ let PieChart = React.createClass({
 					onMouseLeave={this.onMouseLeave}
 				/>
 				</g>
+					{this.props.children}
 				</Chart>
 
 				<Tooltip
