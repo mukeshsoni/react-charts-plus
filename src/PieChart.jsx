@@ -251,7 +251,7 @@ let PieChart = React.createClass({
 					{this.props.children}
 				</Chart>
 
-				<Tooltip {...this.this.state.tooltip}/>
+				<Tooltip {...this.state.tooltip}/>
 				</div>
 		);
 	}

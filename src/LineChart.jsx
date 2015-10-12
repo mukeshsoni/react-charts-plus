@@ -267,54 +267,41 @@ if (Math.abs(xValueCursor - xValueRight) < Math.abs(xValueCursor - xValueLeft)) 
 		return (
 				<div>
 				<Chart height={height} width={width} margin={margin}>
-
-				<DataSet
-					height={innerHeight}
-					width={innerWidth}
-					data={data}
-					line={line}
-					colorScale={colorScale}
-					values={values}
-					label={label}
-					onMouseEnter={this.onMouseEnter}
-					onMouseLeave={this.onMouseLeave}
-					{...stroke}
-					showTooltip={showTooltip}
-				/>
-
-				<Axis
-					className={'x axis'}
-					orientation={'bottom'}
-					scale={xScale}
-					height={innerHeight}
-					width={innerWidth}
-					zero={yIntercept}
-					{...xAxis}
-				/>
-
-				<Axis
-					className={'y axis'}
-					orientation={'left'}
-					scale={yScale}
-					height={innerHeight}
-					width={innerWidth}
-					zero={xIntercept}
-					{...yAxis}
-				/>
+					<DataSet
+						height={innerHeight}
+						width={innerWidth}
+						data={data}
+						line={line}
+						colorScale={colorScale}
+						values={values}
+						label={label}
+						onMouseEnter={this.onMouseEnter}
+						onMouseLeave={this.onMouseLeave}
+						{...stroke}
+						showTooltip={showTooltip}
+					/>
+					<Axis
+						className={'x axis'}
+						orientation={'bottom'}
+						scale={xScale}
+						height={innerHeight}
+						width={innerWidth}
+						zero={yIntercept}
+						{...xAxis}
+					/>
+					<Axis
+						className={'y axis'}
+						orientation={'left'}
+						scale={yScale}
+						height={innerHeight}
+						width={innerWidth}
+						zero={xIntercept}
+						{...yAxis}
+					/>
 					{this.props.children}
 					{tooltipSymbol}
 				</Chart>
-
-				<Tooltip
-					ref='tooltip'
-					hidden={this.state.tooltip.hidden}
-					top={this.state.tooltip.top}
-					position={this.state.tooltip.position}
-					left={this.state.tooltip.left}
-					right={this.state.tooltip.right}
-					bottom={this.state.tooltip.bottom}
-					html={this.state.tooltip.html} />
-
+				<Tooltip {...this.state.tooltip} />
 			</div>
 		);
 	}
