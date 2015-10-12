@@ -95,7 +95,8 @@ let LineChart = React.createClass({
 			defined: () => true,
 			shape: 'circle',
 			shapeColor: null,
-			showTooltipDot: true
+			showTooltipDot: true,
+			showTooltip: true
 		};
 	},
 
@@ -301,7 +302,7 @@ if (Math.abs(xValueCursor - xValueRight) < Math.abs(xValueCursor - xValueLeft)) 
 					{this.props.children}
 					{tooltipSymbol}
 				</Chart>
-				<Tooltip {...this.state.tooltip} />
+				{this.props.showTooltip ? <Tooltip {...this.state.tooltip} /> : ''}
 			</div>
 		);
 	}

@@ -96,7 +96,9 @@ let BarChart = React.createClass({
              TooltipMixin],
 
     getDefaultProps() {
-        return {};
+        return {
+            showTooltip: true
+        };
     },
 
     _tooltipHtml(d, position) {
@@ -187,7 +189,7 @@ let BarChart = React.createClass({
                 { this.props.children }
                 </Chart>
 
-                <Tooltip {...this.state.tooltip}/>
+                {this.props.showTooltip ? <Tooltip {...this.state.tooltip}/> : ''}
                 </div>
         );
     }
