@@ -97,7 +97,9 @@ let BarChart = React.createClass({
 
     getDefaultProps() {
         return {
-            showTooltip: true
+            showTooltip: true,
+            showXAxis: true,
+            showYAxis: true
         };
     },
 
@@ -168,24 +170,25 @@ let BarChart = React.createClass({
             onMouseLeave={this.onMouseLeave}
             groupedBars={groupedBars}
                 />
+                {this.props.showXAxis ? 
+                                <Axis
+                            className={"x axis"}
+                            orientation={"bottom"}
+                            scale={xScale}
+                            height={innerHeight}
+                            width={innerWidth}
+                            {...xAxis}
+                                /> : ''}
 
-                <Axis
-            className={"x axis"}
-            orientation={"bottom"}
-            scale={xScale}
-            height={innerHeight}
-            width={innerWidth}
-            {...xAxis}
-                />
-
-                <Axis
-            className={"y axis"}
-            orientation={"left"}
-            scale={yScale}
-            height={innerHeight}
-            width={innerWidth}
-            {...yAxis}
-                />
+                {this.props.showYAxis ? 
+                                <Axis
+                                    className={"y axis"}
+                                    orientation={"left"}
+                                    scale={yScale}
+                                    height={innerHeight}
+                                    width={innerWidth}
+                                    {...yAxis}
+                                        /> : ''}
                 { this.props.children }
                 </Chart>
 
