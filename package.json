@@ -1,6 +1,6 @@
 {
   "name": "react-charts-plus",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "D3 charts for React",
   "main": "lib/index.js",
   "repository": {

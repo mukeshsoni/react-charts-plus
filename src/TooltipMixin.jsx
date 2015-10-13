@@ -88,7 +88,7 @@ let TooltipMixin = {
 			left: left,
 			hidden: false,
 			position: ['top', 'left'],
-			html: this._tooltipHtml(data, position),
+			html: html,
 			translate: translate
 		};
 
