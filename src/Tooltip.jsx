@@ -14,7 +14,7 @@ let Tooltip = React.createClass({
 			top: 150,
 			left: 100,
 			html: '',
-			translate: 50
+			translate: 0
 		};
 	},
 

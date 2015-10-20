@@ -20,7 +20,7 @@ let TooltipMixin = {
 	getDefaultProps() {
 		return {
 			tooltipMode: 'mouse',
-			tooltipOffset: {top: -35, left: 0},
+			tooltipOffset: {top: -20, left: 15},
 			tooltipHtml: null,
 			tooltipContained: false
 		};
@@ -77,7 +77,7 @@ let TooltipMixin = {
             return (1 - t) * a + t * b;
         }
 
-        let translate = 50;
+        let translate = 0;
         if (tooltipContained) {
 			let t = position[0] / svg.getBoundingClientRect().width;
 			translate = lerp(t, 0, 100);
