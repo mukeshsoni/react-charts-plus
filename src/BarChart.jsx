@@ -56,6 +56,8 @@ let DataSet = React.createClass({
                             data={e}
                             onMouseEnter={onMouseEnter}
                             onMouseLeave={onMouseLeave}
+                            xScale={xScale}
+                            yScale={yScale}
                             />
                     );
                 });
