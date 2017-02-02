@@ -22,7 +22,8 @@
   },
   "homepage": "https://github.com/mukeshsoni/react-charts-plus/",
   "peerDependencies": {    
-    "react": "^0.13.1"
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1"
   },
   "dependencies": {
     "d3": "^3.5.3"
@@ -37,6 +38,7 @@
   "scripts": {
     "prepublish": "babel -c -d ./lib ./src/",
     "postpublish": "rm -r ./lib",
-    "build:js": "webpack && webpack --config webpack.config.min.js"
+    "build:js": "webpack && webpack --config webpack.config.min.js -work",
+    "build:dist": "webpack && webpack --config webpack.config.min.js —dist=../main_service/frontend/harmony/src/pp/shared/vendor/"
   }
 }

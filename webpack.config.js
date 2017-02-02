@@ -9,10 +9,11 @@ if(myArgs.dist) {
 }
 
 if(myArgs.work) {
-	externals = {
-		d3: 'pp/shared/vendor/d3',
-		react: 'vendor/react'
-	};
+  externals = {
+    'd3': 'd3',
+    'react': 'React',
+    'react-dom': 'ReactDOM'
+  };
 }
 
 module.exports = {
